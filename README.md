@@ -1,67 +1,89 @@
-Secure-CRUD 🐳
+Below is the **complete `README.md` in proper Markdown (`.md`) format**.
+You can **copy–paste this exactly** into a file named `README.md` in your repository.
 
-A production-style, multi-container CRUD application demonstrating secure containerization, reverse proxying, automation, and persistence using Docker.
+---
 
-This project was built as part of the Secure-CRUD assignment, focusing on real-world DevOps and container best practices.
+```md
+# Secure-CRUD
 
-📌 Project Overview
+A **production-style, multi-container CRUD application** demonstrating secure containerization, reverse proxying, automation, persistence, and CI/CD using Docker and GitHub Actions.
 
-Secure-CRUD is a simple CRUD (Create, Read, Update, Delete) application deployed using a three-tier container architecture:
+This project was built to satisfy the **Secure-CRUD assignment**, following real-world DevOps and container best practices.
 
-Nginx → Reverse Proxy (only exposed service)
+---
 
-Node.js (Express) → Application logic
+## 📌 Project Overview
 
-MongoDB → Persistent data storage
+**Secure-CRUD** is a simple CRUD (Create, Read, Update, Delete) application deployed using a **three-tier container architecture**:
 
-All services communicate over a private Docker network, ensuring isolation and security.
+- **Nginx** → Reverse Proxy (only service exposed to host)
+- **Node.js (Express)** → Application logic
+- **MongoDB** → Persistent data storage
 
-🏗 Architecture
+All services communicate over a **private Docker network**, ensuring isolation and security.
+
+---
+
+## 🏗 Architecture
+
+```
+
 Client
-  │
-  ▼
-┌──────────────┐
-│   Nginx      │  (Port 80 exposed)
-│ Reverse Proxy│
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│  Node.js App │  (Internal only)
-│  Express API │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│  MongoDB     │  (Internal only)
-│  Persistent  │
-└──────────────┘
+|
+v
++-------------------+
+| Nginx | Port 80 exposed
+| Reverse Proxy |
++---------+---------+
+|
+v
++-------------------+
+| Node.js App | Internal only
+| Express API |
++---------+---------+
+|
+v
++-------------------+
+| MongoDB | Internal only
+| Persistent DB |
++-------------------+
 
-✅ Assignment Requirements Coverage
-Requirement	Status
-CRUD operations	✅
-Multi-container system	✅
-Nginx reverse proxy	✅
-Network isolation	✅
-Non-root application container	✅
-Environment variables for secrets	✅
-Persistent storage	✅
-Automated deployment script	✅
-Health checks	✅
-CI/CD ready	✅
-🧱 Tech Stack
+```
 
-Backend: Node.js + Express
+---
 
-Database: MongoDB
+## ✅ Assignment Requirements Coverage
 
-Proxy: Nginx
+| Requirement | Status |
+|---|---|
+| CRUD operations | ✅ |
+| Multi-container system | ✅ |
+| Nginx reverse proxy | ✅ |
+| Network isolation | ✅ |
+| Non-root application container | ✅ |
+| Environment variables for secrets | ✅ |
+| Persistent storage | ✅ |
+| Automated deployment script | ✅ |
+| Health checks | ✅ |
+| GitHub Actions CI/CD | ✅ |
 
-Containerization: Docker & Docker Compose
+---
 
-Automation: Bash (deploy.sh)
+## 🧱 Tech Stack
 
-📂 Repository Structure
+- **Backend:** Node.js + Express
+- **Database:** MongoDB
+- **Proxy:** Nginx
+- **Containerization:** Docker & Docker Compose
+- **Automation:** Bash (`deploy.sh`)
+- **CI/CD:** GitHub Actions + Docker Hub
+
+---
+
+## 📂 Repository Structure
+
+```
+
 .
 ├── src/                 # Application source code
 │   ├── index.js
@@ -70,126 +92,181 @@ Automation: Bash (deploy.sh)
 ├── nginx/               # Nginx configuration
 │   ├── nginx.conf
 │   └── Dockerfile
-├── Dockerfile            # App container
+├── Dockerfile            # App container definition
 ├── docker-compose.yml    # Multi-container orchestration
 ├── deploy.sh             # Automated deployment script
-├── .env                  # Environment variables
+├── .env                  # Environment variables (ignored by git)
 └── README.md
 
-⚙️ Prerequisites
+````
 
-Make sure the following are installed:
+---
 
-Docker
+## ⚙️ Prerequisites
 
-Docker Compose
+Ensure the following are installed:
 
-Git Bash / Linux shell / macOS Terminal
+- Docker
+- Docker Compose
+- Git Bash / Linux shell / macOS Terminal
 
-🚀 How to Run the Application
-1️⃣ Clone the Repository
+---
+
+## 🚀 Running the Application
+
+### 1️⃣ Clone the Repository
+
+```bash
 git clone <your-github-repo-url>
 cd secure-crud
+````
 
-2️⃣ Run the Deployment Script
+---
+
+### 2️⃣ Run the Deployment Script
+
+```bash
 chmod +x deploy.sh
 ./deploy.sh
-
+```
 
 The script will:
 
-Verify Docker & Docker Compose
-
-Stop and clean old containers
-
-Build all images
-
-Start services
-
-Wait until the app is healthy
+1. Verify Docker & Docker Compose
+2. Stop and clean existing containers
+3. Build all images
+4. Start all services
+5. Wait until the application is healthy
 
 When ready, you will see:
 
+```
 [SUCCESS] Application is live at http://localhost
+```
 
-🌐 API Endpoints
+---
 
-All endpoints are accessed through Nginx (port 80).
+## 🌐 API Endpoints
 
-Create a Task
+All endpoints are accessed through **Nginx on port 80**.
+
+### Create a Task
+
+```http
 POST /api/tasks
+```
 
+```json
 {
   "title": "My Task",
   "completed": false
 }
+```
 
-Get All Tasks
+---
+
+### Get All Tasks
+
+```http
 GET /api/tasks
+```
 
-Update a Task
+---
+
+### Update a Task
+
+```http
 PUT /api/tasks/:id
+```
 
+```json
 {
   "completed": true
 }
+```
 
-Delete a Task
+---
+
+### Delete a Task
+
+```http
 DELETE /api/tasks/:id
+```
 
-💾 Data Persistence
+---
 
-MongoDB data is stored in a Docker volume
+## 💾 Data Persistence
 
-Data remains intact across:
+* MongoDB data is stored in a **Docker volume**
+* Data persists across:
 
-Container restarts
+  * Container restarts
+  * Docker restarts
+  * System reboots
 
-Docker restarts
+---
 
-System reboots
+## 🔐 Security Considerations
 
-🔐 Security Considerations
+* Only **Nginx** exposes a port to the host
+* Application and database containers are isolated
+* The application container runs as a **non-root user**
+* Sensitive values are injected using **environment variables**
 
-Only Nginx exposes a port to the host
+---
 
-App and database are isolated in a private network
+## 🔄 CI/CD Pipeline
 
-Application container runs as a non-root user
+GitHub Actions is used for CI/CD.
 
-Secrets are injected via environment variables
+On every push to the `main` branch, the pipeline:
 
-🔄 CI/CD (GitHub Actions)
+1. Builds the Docker image
+2. Tags the image as:
 
-This project is CI/CD ready.
+   * `latest`
+   * `<commit-sha>`
+3. Pushes the image to **Docker Hub (public repository)**
 
-The pipeline (to be added in .github/workflows/) will:
+---
 
-Trigger on push to main
+## 🧪 Health Checks
 
-Build Docker image
+The deployment script validates application readiness by polling:
 
-Tag image (latest + commit SHA)
-
-Push to Docker Hub (public repository)
-
-🧪 Health Checks
-
-The deployment script verifies application readiness by polling:
-
+```
 http://localhost/api/tasks
+```
 
+The success message is printed **only after the system is fully operational**.
 
-The success message is printed only after the system is fully operational.
+---
 
-🧑‍💻 Author
+## 🧑‍💻 Author
 
-Mainak Saha
+**Mainak Saha**
 
-📎 Submission Notes
+---
 
-This repository follows the exact structure required by the assignment
+## 📎 Submission Notes
 
-The project demonstrates real-world containerized deployment practices
+* The repository follows the **exact structure required** by the assignment
+* Demonstrates **real-world containerized deployment practices**
+* Fully runnable using a **single command**
+* Includes automation and CI/CD as required
 
-Fully runnable using a single command
+---
+
+✅ **Status: Assignment Complete and Submission-ready**
+
+```
+
+---
+
+If you want, I can also:
+- Verify this README against your instructor’s rubric
+- Add screenshots/diagrams
+- Write a **submission description** for your LMS
+
+Just let me know.
+```
